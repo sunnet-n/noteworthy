@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>🏆 İyi ki Doğdun Mete | Galatasaray Şampiyon 🦁</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100%;
+      background: linear-gradient(145deg, #0a0f2a 0%, #1a1f3a 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', 'Segoe UI', 'Dancing Script', cursive, system-ui, sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      cursor: pointer;
+      padding: 16px;
+    }
+
+    /* main birthday card container - FULLY RESPONSIVE */
+    .birthday-container {
+      text-align: center;
+      z-index: 20;
+      width: 100%;
+      max-width: 550px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 1.5rem 1.2rem 2rem;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 245, 200, 0.5);
+      transition: transform 0.3s ease, padding 0.2s;
+      animation: floatGlow 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0px) scale(1);
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+      }
+      100% {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 30px 45px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    /* birthday message */
+    .birthday-message {
+      margin-bottom: 0.8rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .greeting {
+      font-size: clamp(1.6rem, 7vw, 2.8rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFD966, #FFB347, #FF6B6B);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 15px rgba(255, 140, 0, 0.3);
+      letter-spacing: 1px;
+      animation: textPop 0.8s cubic-bezier(0.34, 1.2, 0.64, 1);
+      line-height: 1.2;
+    }
+
+    .name {
+      font-size: clamp(2.5rem, 12vw, 4.5rem);
+      font-weight: 900;
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(145deg, #FFE6A7, #FFB347, #FF8C42);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      margin: 0.2rem 0;
+      animation: bounceName 1.2s infinite alternate ease-in-out;
+      display: inline-block;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    @keyframes bounceName {
+      0% { transform: translateY(0px) rotate(-1deg); }
+      100% { transform: translateY(-6px) rotate(1deg); }
+    }
+
+    @keyframes textPop {
+      0% { opacity: 0; transform: scale(0.7); letter-spacing: 3px; }
+      70% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* wish text container - fixed overflow issue */
+    .wish-text {
+      font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+      font-weight: 500;
+      background: rgba(255,235,180,0.9);
+      display: block;
+      padding: 1rem 1rem;
+      border-radius: 28px;
+      margin: 12px 0;
+      backdrop-filter: blur(4px);
+      color: #8b3c0e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      line-height: 1.5;
+      text-align: center;
+      word-break: break-word;
+      white-space: normal;
+      overflow-wrap: break-word;
+      max-width: 100%;
+      border-left: 4px solid #FFB347;
+      border-right: 4px solid #FFB347;
+    }
+
+    /* galatasaray special badge */
+    .gs-badge {
+      background: linear-gradient(135deg, #C80815, #9a0000);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 40px;
+      margin: 8px 0;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
+      font-weight: bold;
+      color: #FFD700;
+      border: 1px solid #FFD700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .cake-area {
+      margin: 15px 0;
+      font-size: clamp(2.5rem, 12vw, 4rem);
+      cursor: pointer;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,0.2));
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .cake-area:active {
+      transform: scale(0.96);
+    }
+
+    .invite-text {
+      font-size: clamp(0.7rem, 3.5vw, 0.95rem);
+      color: #FFEEDB;
+      background: #3a2c1fb3;
+      padding: 6px 12px;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 12px;
+      backdrop-filter: blur(4px);
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    /* confetti canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* balloons animation */
+    .balloon {
+      position: absolute;
+      bottom: -120px;
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      pointer-events: none;
+      z-index: 15;
+      filter: drop-shadow(0 8px 6px rgba(0,0,0,0.15));
+      animation: flyUp 6s linear forwards;
+    }
+
+    @keyframes flyUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    /* floating stars background */
+    .star {
+      position: absolute;
+      background: radial-gradient(circle, #fff9c4, #ffdf80);
+      border-radius: 50%;
+      opacity: 0.6;
+      z-index: 1;
+      animation: twinkle 2s infinite alternate;
+      box-shadow: 0 0 6px rgba(255,215,0,0.8);
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1.2);}
+    }
+
+    /* falling glitter */
+    .glitter {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, gold, orange);
+      border-radius: 2px;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 12;
+      animation: fallLinear 3s linear forwards;
+    }
+
+    @keyframes fallLinear {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* interactive fireworks */
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 200;
+      animation: burstPop 0.7s ease-out forwards;
+    }
+
+    @keyframes burstPop {
+      0% {
+        transform: scale(0.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    /* instructions hint */
+    .hint {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 0.7rem;
+      color: #ffecb3;
+      background: rgba(0,0,0,0.6);
+      width: auto;
+      white-space: nowrap;
+      padding: 5px 14px;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      font-weight: 500;
+      pointer-events: none;
+    }
+
+    /* responsive button */
+    button {
+      background: #ffb347;
+      border: none;
+      padding: clamp(6px, 2vw, 10px) clamp(16px, 5vw, 24px);
+      border-radius: 60px;
+      font-weight: bold;
+      margin-top: 15px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #2f1b0c;
+      box-shadow: 0 4px 0 #9b4b1a;
+      font-size: clamp(0.8rem, 3.5vw, 1rem);
+    }
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #9b4b1a;
+    }
+
+    /* ultra small devices */
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+        align-items: center;
+      }
+      .birthday-container {
+        padding: 1.2rem 1rem 1.6rem;
+        border-radius: 40px;
+      }
+      .wish-text {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+        line-height: 1.45;
+      }
+      .gs-badge {
+        padding: 4px 12px;
+        font-size: 0.7rem;
+      }
+      .hint {
+        white-space: nowrap;
+        font-size: 0.6rem;
+        bottom: 8px;
+      }
+    }
+
+    /* landscape mode adjustment */
+    @media (max-height: 600px) and (orientation: landscape) {
+      body {
+        padding: 8px;
+      }
+      .birthday-container {
+        padding: 0.8rem 1rem 1.2rem;
+        max-width: 90%;
+      }
+      .wish-text {
+        margin: 6px 0;
+        padding: 0.5rem;
+      }
+      .cake-area {
+        margin: 5px 0;
+      }
+      .greeting {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="birthday-container">
+  <div class="birthday-message">
+    <div class="greeting">🎉 İYİ Kİ DOĞDUN! 🎈</div>
+    <div class="name" id="personName">METE</div>
+    
+    <!-- GALATASARAY ŞAMPİYONLUK BADGESİ -->
+    <div class="gs-badge">
+      🏆🦁 GALATASARAY ŞAMPİYON! 🏆⭐
+    </div>
+    
+    <!-- DİLEK METNİ - DÜZELTİLDİ, TAŞMA YOK -->
+    <div class="wish-text">
+      🇹🇷✨ Dün Aslanlar şampiyon oldu, bugün SENİN günün! ✨🇹🇷<br>
+      💛❤️ Sarı-kırmızılı yüreğin hiç durmasın. Gururlu ve güçlü ol, tıpkı aslanlar gibi!<br>
+      🎂 İyi ki doğdun METE! Nice şampiyonluklara, nice mutlu yıllara! 🎂
+    </div>
+  </div>
+  
+  <div class="cake-area" id="cakeTrigger">
+    🎂🏆⚽🧁
+  </div>
+  <div class="invite-text">
+    🎁 Pastaya ya da herhangi bir yere dokun → Konfeti + Balonlar! 🎁
+  </div>
+  <button id="burstBtn">🎆 HAVAI FİŞEK FIRLAT! 🎆</button>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+<div class="hint">💥 Tıkla/Dokun — Şampiyonlar gibi kutlama! 🦁💥</div>
+
+<script>
+  (function() {
+    // KİŞİ ADI
+    const BIRTHDAY_PERSON = "METE";
+    const nameElement = document.getElementById("personName");
+    if (nameElement) nameElement.innerText = BIRTHDAY_PERSON;
+
+    // ---- KONFETİ MOTORU (optimize) ----
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+    });
+    resizeCanvas();
+
+    let particles = [];
+    let animationId = null;
+
+    function randomRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createConfetti(originX, originY, count = 160) {
+      const colors = ["#FF595E", "#FFCA3A", "#C80815", "#1982C4", "#6A4E9B", "#FF9F1C", "#F15BB5", "#FEE440", "#FFD700"];
+      for (let i = 0; i < count; i++) {
+        const angle = randomRange(0, Math.PI * 2);
+        const speed = randomRange(3, 12);
+        const vx = Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1);
+        const vy = Math.sin(angle) * speed - randomRange(2, 7);
+        particles.push({
+          x: originX,
+          y: originY,
+          vx: vx,
+          vy: vy,
+          size: randomRange(4, 10),
+          color: colors[Math.floor(Math.random() * colors.length)],
+          gravity: 0.22,
+          alpha: 1,
+          rotation: randomRange(0, 360),
+          spin: randomRange(-5, 5),
+          shape: Math.random() > 0.6 ? "rect" : "circle"
+        });
+      }
+      if (!animationId) {
+        animationId = requestAnimationFrame(updateConfetti);
+      }
+    }
+
+    function updateConfetti() {
+      ctx.clearRect(0, 0, width, height);
+      let anyAlive = false;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= 0.009;
+        p.rotation += p.spin;
+        if (p.y > height + 100 || p.x < -100 || p.x > width + 100 || p.alpha <= 0.02) {
+          particles.splice(i,1);
+          i--;
+          continue;
+        }
+        anyAlive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+        ctx.globalAlpha = p.alpha * 0.9;
+        ctx.fillStyle = p.color;
+        if (p.shape === "circle") {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size * 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+        }
+        ctx.restore();
+      }
+      if (anyAlive) {
+        animationId = requestAnimationFrame(updateConfetti);
+      } else {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+        particles = [];
+      }
+    }
+
+    // ---- BALONLAR ----
+    function launchBalloons(count = 12) {
+      const balloonEmojis = ["🎈", "🎈", "🦁", "🏆", "⭐", "🎉", "🎊", "🧁", "🎂", "⚽"];
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const balloon = document.createElement("div");
+          const randomEmoji = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+          balloon.innerText = randomEmoji;
+          balloon.classList.add("balloon");
+          const leftPos = Math.random() * (window.innerWidth - 60) + 10;
+          const duration = 4.5 + Math.random() * 5;
+          balloon.style.left = leftPos + "px";
+          balloon.style.fontSize = (1.4 + Math.random() * 1.3) + "rem";
+          balloon.style.animationDuration = duration + "s";
+          balloon.style.opacity = 0.9;
+          document.body.appendChild(balloon);
+          setTimeout(() => { if(balloon && balloon.remove) balloon.remove(); }, duration * 1000);
+        }, i * 70);
+      }
+    }
+
+    // ---- PARILTI ----
+    function createGlitterBurst(originX, originY, count = 50) {
+      for (let i = 0; i < count; i++) {
+        const glitter = document.createElement("div");
+        glitter.classList.add("glitter");
+        glitter.style.left = (originX + (Math.random() - 0.5) * 50) + "px";
+        glitter.style.top = (originY + (Math.random() - 0.5) * 40) + "px";
+        glitter.style.width = Math.random() * 7 + 2 + "px";
+        glitter.style.height = Math.random() * 7 + 2 + "px";
+        glitter.style.background = `radial-gradient(circle, ${["#FFD700","#FFB347","#C80815","#FF6B6B","#F4D03F"][Math.floor(Math.random()*5)]}, #ffaa33)`;
+        glitter.style.animation = `fallLinear ${1 + Math.random() * 1.8}s linear forwards`;
+        document.body.appendChild(glitter);
+        setTimeout(() => { if(glitter && glitter.remove) glitter.remove(); }, 2500);
+      }
+    }
+
+    // ---- HAVAI FİŞEK ----
+    function createFireworkSpark(x, y) {
+      const fireworkColors = ["#C80815", "#FFA500", "#FFD700", "#6AFF6A", "#FF4444", "#FF69B4", "#FF3333"];
+      for (let i = 0; i < 40; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("firework");
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        dot.style.left = x + "px";
+        dot.style.top = y + "px";
+        dot.style.backgroundColor = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
+        dot.style.width = "7px";
+        dot.style.height = "7px";
+        dot.style.position = "absolute";
+        dot.style.pointerEvents = "none";
+        dot.style.zIndex = "999";
+        document.body.appendChild(dot);
+        let posX = x, posY = y;
+        let opacity = 1;
+        let life = 1;
+        const interval = setInterval(() => {
+          posX += vx;
+          posY += vy;
+          opacity -= 0.045;
+          life -= 0.05;
+          dot.style.left = posX + "px";
+          dot.style.top = posY + "px";
+          dot.style.opacity = opacity;
+          dot.style.transform = `scale(${life})`;
+          if (opacity <= 0.05 || life <= 0.1) {
+            clearInterval(interval);
+            if(dot && dot.remove) dot.remove();
+          }
+        }, 20);
+        setTimeout(() => { if(dot && dot.remove) dot.remove(); }, 700);
+      }
+    }
+
+    // ---- ANA KUTLAMA FONKSİYONU ----
+    function fullCelebration(event) {
+      let x, y;
+      if (event && event.clientX && event.clientY) {
+        x = event.clientX;
+        y = event.clientY;
+      } else {
+        x = window.innerWidth / 2;
+        y = window.innerHeight / 2;
+      }
+      createConfetti(x, y, 180);
+      createGlitterBurst(x, y, 65);
+      setTimeout(() => {
+        createConfetti(x + (Math.random() - 0.5) * 90, y + (Math.random() - 0.5) * 70, 100);
+      }, 50);
+      launchBalloons(15);
+      
+      for(let i=0;i<10;i++){
+        const fake = document.createElement("div");
+        fake.style.position = "absolute";
+        fake.style.left = (x + (Math.random() - 0.5)*130)+"px";
+        fake.style.top = (y + (Math.random() - 0.5)*100)+"px";
+        fake.style.width = "10px";
+        fake.style.height = "10px";
+        fake.style.background = "gold";
+        fake.style.borderRadius = "50%";
+        fake.style.boxShadow = "0 0 10px orange";
+        fake.style.pointerEvents = "none";
+        fake.style.zIndex = "50";
+        fake.style.animation = "twinkle 0.4s ease-out forwards";
+        document.body.appendChild(fake);
+        setTimeout(()=>fake.remove(), 500);
+      }
+    }
+
+    // ---- FİŞEK BUTONU ----
+    function fireworksMode() {
+      const centerX = window.innerWidth/2;
+      const centerY = window.innerHeight/2;
+      createConfetti(centerX, centerY, 280);
+      createGlitterBurst(centerX, centerY, 120);
+      launchBalloons(22);
+      for (let i = 0; i < 7; i++) {
+        setTimeout(() => {
+          const randX = Math.random() * window.innerWidth;
+          const randY = Math.random() * window.innerHeight * 0.7 + 80;
+          createFireworkSpark(randX, randY);
+          createConfetti(randX, randY, 50);
+        }, i * 90);
+      }
+      setTimeout(() => {
+        for (let i=0;i<4;i++) {
+          createConfetti(window.innerWidth/2 + (Math.random()-0.5)*250, window.innerHeight/2 + (Math.random()-0.5)*180, 70);
+        }
+      }, 400);
+    }
+
+    // ---- YILDIZLAR ----
+    function generateStars(num = 110) {
+      for (let i = 0; i < num; i++) {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        const size = Math.random() * 5 + 2;
+        star.style.width = size + "px";
+        star.style.height = size + "px";
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 3 + "s";
+        star.style.animationDuration = 1.5 + Math.random() * 2 + "s";
+        document.body.appendChild(star);
+      }
+    }
+
+    // ---- UÇAN MESAJLAR ----
+    let messageInterval;
+    function startFloatingMessages() {
+      const wishes = ["🎂 İYİ Kİ DOĞDUN!", "🏆 ŞAMPİYON GİBİ KUTLA!", "🦁 ASLANLAR GİBİ GURURLU OL!", "⭐ METE SEN BİR YILDIZSIN!", "❤️💛 SARILIP KIRMIZI MUTLULUK", "🎉 EN BÜYÜK GALATASARAY!", "🎁 NİCE MUTLU YILLAR", "🏆 GALATASARAY ŞAMPİYON", "⚽ GOLLLLL!"];
+      messageInterval = setInterval(() => {
+        const msgDiv = document.createElement("div");
+        msgDiv.innerText = wishes[Math.floor(Math.random() * wishes.length)];
+        msgDiv.style.position = "absolute";
+        msgDiv.style.left = Math.random() * (window.innerWidth - 150) + 10 + "px";
+        msgDiv.style.bottom = "-30px";
+        msgDiv.style.fontSize = "0.85rem";
+        msgDiv.style.fontWeight = "bold";
+        msgDiv.style.background = "rgba(0,0,0,0.7)";
+        msgDiv.style.color = "#ffdd99";
+        msgDiv.style.padding = "5px 12px";
+        msgDiv.style.borderRadius = "40px";
+        msgDiv.style.backdropFilter = "blur(8px)";
+        msgDiv.style.fontFamily = "cursive";
+        msgDiv.style.whiteSpace = "nowrap";
+        msgDiv.style.pointerEvents = "none";
+        msgDiv.style.zIndex = "90";
+        msgDiv.style.animation = "flyUp 7s linear forwards";
+        document.body.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 7000);
+      }, 3800);
+    }
+
+    // BAŞLANGIÇ KUTLAMASI
+    function initialCelebration() {
+      setTimeout(() => {
+        const x = window.innerWidth / 2;
+        const y = window.innerHeight / 1.7;
+        createConfetti(x, y, 150);
+        launchBalloons(12);
+        createGlitterBurst(x, y, 60);
+      }, 300);
+    }
+
+    // ---- OLAY DİNLEYİCİLERİ ----
+    document.body.addEventListener("click", (e) => {
+      if (e.target.id === "burstBtn") {
+        fireworksMode();
+        e.stopPropagation(); 
+      } else {
+        fullCelebration(e);
+      }
+    });
+
+    const cakeTrigger = document.getElementById("cakeTrigger");
+    if (cakeTrigger) {
+      cakeTrigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let rect = cakeTrigger.getBoundingClientRect();
+        let cx = rect.left + rect.width / 2;
+        let cy = rect.top + rect.height / 2;
+        createConfetti(cx, cy, 200);
+        createGlitterBurst(cx, cy, 85);
+        launchBalloons(16);
+        for (let i=0;i<3;i++) {
+          setTimeout(() => createFireworkSpark(cx + (Math.random()-0.5)*50, cy + (Math.random()-0.5)*40), i*100);
+        }
+      });
+    }
+
+    const burstBtn = document.getElementById("burstBtn");
+    if (burstBtn) {
+      burstBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        fireworksMode();
+      });
+    }
+
+    generateStars(130);
+    startFloatingMessages();
+    initialCelebration();
+
+    // isim ışıltısı
+    const nameSpan = document.querySelector(".name");
+    if (nameSpan) {
+      setInterval(() => {
+        nameSpan.style.textShadow = `0 0 8px #ffcf4a, 0 0 18px #ffb347`;
+        setTimeout(() => nameSpan.style.textShadow = `0 4px 20px rgba(0,0,0,0.2)`, 400);
+      }, 1300);
+    }
+
+    // mobil touch düzeltme
+    window.addEventListener("touchstart", (e) => {
+      if (e.target.id !== "burstBtn") {
+        fullCelebration(e.touches[0]);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
