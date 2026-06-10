@@ -2,239 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tumbling Square</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+
 <style>
-body{
-    margin:0;
-    background:#f5f5f5;
-}
-canvas{
-    display:block;
-    margin:auto;
-    background:white;
-}
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:Arial, sans-serif;
+    }
+
+    body{
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#1e3c72,#2a5298);
+        color:white;
+        text-align:center;
+        padding:20px;
+    }
+
+    .container{
+        width:100%;
+        max-width:900px;
+        padding:30px;
+        border-radius:20px;
+        background:rgba(255,255,255,0.1);
+        backdrop-filter:blur(10px);
+        box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    h1{
+        font-size:clamp(1.8rem, 4vw, 2.5rem);
+        margin-bottom:15px;
+    }
+
+    .target-date{
+        font-size:clamp(1rem, 2.5vw, 1.2rem);
+        opacity:0.9;
+        margin-bottom:25px;
+    }
+
+    .countdown{
+        display:flex;
+        gap:15px;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-bottom:25px;
+    }
+
+    .box{
+        flex:1 1 120px;
+        min-width:110px;
+        max-width:150px;
+        padding:20px 10px;
+        border-radius:15px;
+        background:rgba(255,255,255,0.15);
+    }
+
+    .number{
+        font-size:clamp(1.8rem, 5vw, 3rem);
+        font-weight:bold;
+    }
+
+    .label{
+        margin-top:8px;
+        font-size:0.9rem;
+        text-transform:uppercase;
+        letter-spacing:1px;
+    }
+
+    .address{
+        margin-top:10px;
+        font-size:clamp(0.95rem, 2.2vw, 1.1rem);
+        line-height:1.6;
+        opacity:0.95;
+        padding-top:15px;
+        border-top:1px solid rgba(255,255,255,0.2);
+    }
+
+    #expired{
+        font-size:clamp(1.3rem, 4vw, 2rem);
+        font-weight:bold;
+        display:none;
+        margin-top:20px;
+    }
+
+    /* 📱 Small screens optimization */
+    @media (max-width: 500px){
+        .container{
+            padding:20px;
+        }
+
+        .countdown{
+            gap:10px;
+        }
+
+        .box{
+            flex:1 1 45%;
+            min-width:120px;
+        }
+    }
 </style>
 </head>
+
 <body>
 
-<canvas id="c" width="1600" height="700"></canvas>
+<div class="container">
+    <h1>Seminer Tarihi ve Saati</h1>
+
+    <div class="target-date">
+        17 Haziran 2026, 13:00 (GMT+3)
+    </div>
+
+    <div class="countdown" id="countdown">
+        <div class="box">
+            <div class="number" id="days">0</div>
+            <div class="label">Gün</div>
+        </div>
+
+        <div class="box">
+            <div class="number" id="hours">0</div>
+            <div class="label">Saat</div>
+        </div>
+
+        <div class="box">
+            <div class="number" id="minutes">0</div>
+            <div class="label">Dk</div>
+        </div>
+
+        <div class="box">
+            <div class="number" id="seconds">0</div>
+            <div class="label">Sa</div>
+        </div>
+    </div>
+
+    <div class="address">
+        Derslik 2032, Blok E<br>
+        Fen-Edebiyat Fakültesi<br>
+        Yıldız Teknik Üniversitesi
+    </div>
+
+    <div id="expired">
+        The countdown has ended!
+    </div>
+</div>
 
 <script>
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
+    const targetDate = new Date("2026-06-17T13:00:00+03:00");
 
-const x = 80;          // side length
-const turns = 9;
-const duration = 800;  // ms per tumble
-const pause = 300;     // ms at landing
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
 
-const groundY = 500;
-const startX = 150;    // left edge of initial square
+        if (diff <= 0) {
+            document.getElementById("countdown").style.display = "none";
+            document.getElementById("expired").style.display = "block";
+            return;
+        }
 
-// Draw ground with ticks and individual section labels
-function drawGround(){
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.moveTo(50, groundY);
-    ctx.lineTo(1500, groundY);
-    ctx.stroke();
-
-    // Draw the starting tick at 0x (Point D)
-    ctx.beginPath();
-    ctx.moveTo(startX, groundY-8);
-    ctx.lineTo(startX, groundY+8);
-    ctx.stroke();
-
-    for(let k=1; k<=10; k++){
-        let px = startX + k*x;
-
-        // Draw boundary tick marks
-        ctx.beginPath();
-        ctx.moveTo(px, groundY-8);
-        ctx.lineTo(px, groundY+8);
-        ctx.stroke();
-
-        // Label each center space between ticks as "x"
-        ctx.font = "italic 18px Arial";
-        ctx.textAlign = "center";
-        ctx.fillStyle = "black";
-        
-        let midX = px - (x / 2);
-        ctx.fillText("x", midX, groundY + 30);
-    }
-}
-
-// Draw measurement lines (9x and 10x)
-function drawDistanceLines(){
-    // --- 9x Line (Traveled rotation distance: from initial Bottom-Right to final Bottom-Right) ---
-    const start9x = startX + x;
-    const end9x = startX + (10 * x);
-    const y9x = groundY + 70;
-
-    ctx.strokeStyle = "#20b2aa";             // Light sea green for 9x
-    ctx.fillStyle = "#20b2aa";
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-    ctx.moveTo(start9x, y9x);
-    ctx.lineTo(end9x, y9x);
-    ctx.stroke();
-
-    // 9x Arrows
-    ctx.beginPath();
-    ctx.moveTo(start9x, y9x); ctx.lineTo(start9x + 10, y9x - 4); ctx.lineTo(start9x + 10, y9x + 4); ctx.fill();
-    ctx.moveTo(end9x, y9x);   ctx.lineTo(end9x - 10, y9x - 4);   ctx.lineTo(end9x - 10, y9x + 4);   ctx.fill();
-
-    ctx.font = "bold 16px Arial";
-    ctx.fillText("9x (kat edilen mesafe)", (start9x + end9x) / 2, y9x - 10);
-
-
-    // --- 10x Line (Total Span: Point D to Point H) ---
-    const start10x = startX;
-    const end10x = startX + (10 * x);
-    const y10x = groundY + 140;
-
-    ctx.strokeStyle = "#d9534f";             // Crimson red for 10x
-    ctx.fillStyle = "#d9534f";
-
-    ctx.beginPath();
-    ctx.moveTo(start10x, y10x);
-    ctx.lineTo(end10x, y10x);
-    ctx.stroke();
-
-    // 10x Arrows & Boundary Lines
-    ctx.beginPath();
-    ctx.moveTo(start10x, y10x - 5); ctx.lineTo(start10x, y10x + 5);
-    ctx.moveTo(start10x, y10x); ctx.lineTo(start10x + 10, y10x - 4); ctx.lineTo(start10x + 10, y10x + 4); ctx.fill();
-    
-    ctx.moveTo(end10x, y10x - 5);   ctx.lineTo(end10x, y10x + 5);
-    ctx.moveTo(end10x, y10x);   ctx.lineTo(end10x - 10, y10x - 4);   ctx.lineTo(end10x - 10, y10x + 4);   ctx.fill();
-    ctx.stroke();
-
-    // Labels D, H, and 10x
-    ctx.font = "italic bold 18px Arial";
-    ctx.fillText("D", start10x, y10x + 25);
-    ctx.fillText("H", end10x, y10x + 25);
-    
-    ctx.font = "bold 18px Arial";
-    ctx.fillText("10x (ilk ve son durum arasındaki mesafe)", (start10x + end10x) / 2, y10x - 10);
-}
-
-// Draw square with optional corner labels and custom label color
-function drawSquare(points, color, showLabels = false, labelColor = "black"){
-    ctx.fillStyle = color;
-    ctx.strokeStyle = color.replace(/[\d.]+\)$/, "1)"); 
-    ctx.lineWidth = 3;
-
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for(let i=1; i<4; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
-    }
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    if (showLabels) {
-        ctx.font = "bold 16px Arial";
-        ctx.fillStyle = labelColor;
-        ctx.textBaseline = "middle";
-        ctx.textAlign = "center";
-        
-        const labels = ["A", "B", "C", "D"];
-        points.forEach((pt, idx) => {
-            const offsetX = (pt.x - (points[0].x + points[2].x)/2) * 0.25;
-            const offsetY = (pt.y - (points[0].y + points[2].y)/2) * 0.25;
-            ctx.fillText(labels[idx], pt.x + offsetX, pt.y + offsetY);
-        });
-    }
-}
-
-// Rotate point about pivot
-function rotate(p, pivot, theta){
-    const dx = p.x - pivot.x;
-    const dy = p.y - pivot.y;
-    return {
-        x: pivot.x + dx * Math.cos(theta) - dy * Math.sin(theta),
-        y: pivot.y + dx * Math.sin(theta) + dy * Math.cos(theta)
-    };
-}
-
-// Setup absolute initial vertices
-const initial = [
-    {x: startX,     y: groundY - x}, // A
-    {x: startX + x, y: groundY - x}, // B
-    {x: startX + x, y: groundY},     // C
-    {x: startX,     y: groundY}      // D
-];
-
-let current = JSON.parse(JSON.stringify(initial));
-let layoutIndices = [0, 1, 2, 3]; 
-
-let step = 0;
-let animStart = null;
-let waiting = false;
-
-function animate(time){
-    if(step >= turns){
-        render(current);
-        return;
+        document.getElementById("days").textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        document.getElementById("minutes").textContent = Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
     }
 
-    if(waiting){
-        requestAnimationFrame(animate);
-        return;
-    }
-
-    if(!animStart) animStart = time;
-
-    let t = (time - animStart) / duration;
-    if(t > 1) t = 1;
-
-    const theta = t * Math.PI / 2;
-
-    const pivotIndex = layoutIndices[2];
-    const pivot = current[pivotIndex];
-
-    const frameSquare = current.map(pt => rotate(pt, pivot, theta));
-
-    render(frameSquare);
-
-    if(t < 1){
-        requestAnimationFrame(animate);
-    } else {
-        current = frameSquare;
-        step++;
-        animStart = null;
-        waiting = true;
-
-        const last = layoutIndices.pop();
-        layoutIndices.unshift(last);
-
-        setTimeout(() => {
-            waiting = false;
-            requestAnimationFrame(animate);
-        }, pause);
-    }
-}
-
-function render(movingSquare){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    drawGround();
-    drawDistanceLines(); 
-    
-    // Initial ghost square
-    drawSquare(initial, "rgba(0, 180, 0, 0.15)", true, "rgba(0, 120, 0, 0.7)");
-    
-    // Active square
-    drawSquare(movingSquare, "rgba(30, 100, 255, 0.5)", true, "black");
-}
-
-render(current);
-requestAnimationFrame(animate);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 </script>
 
 </body>
