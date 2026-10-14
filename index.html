@@ -52,6 +52,110 @@
         flex-wrap:wrap;
         margin-bottom:25px;
     }
+    
+/* Zoom Meeting Information */
+
+.meeting-info {
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    text-align: left;
+    font-family: inherit;
+}
+
+.meeting-info h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #17365d;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+/* Meeting details */
+
+.meeting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.meeting-row:last-of-type {
+    border-bottom: none;
+}
+
+.meeting-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.meeting-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* Join meeting button */
+
+.meeting-button {
+    display: block;
+    margin-top: 22px;
+    padding: 14px 20px;
+    background: #17365d;
+    color: #ffffff;
+    border-radius: 9px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s ease,
+                transform 0.2s ease;
+}
+
+.meeting-button:hover {
+    background: #24558c;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 480px) {
+    .meeting-info {
+        padding: 18px;
+    }
+
+    .meeting-info h2 {
+        font-size: 18px;
+    }
+
+    .meeting-row {
+        align-items: flex-start;
+    }
+
+    .meeting-label,
+    .meeting-value {
+        font-size: 13px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
     .box{
         flex:1 1 120px;
@@ -110,6 +214,7 @@
 
 <body>
 
+
 <div class="container">
     <h1>Seminer Tarihi ve Saati</h1>
 
@@ -139,16 +244,40 @@
         </div>
     </div>
 
-    <div class="address">
-        Derslik 2032, Blok E<br>
-        Fen-Edebiyat Fakültesi<br>
-        Yıldız Teknik Üniversitesi
+    <!-- Zoom Meeting Information -->
+    <div class="meeting-info">
+        <h2>Seminer Katılım Bilgileri</h2>
+
+        <div class="meeting-row">
+            <span class="meeting-label">Platform</span>
+            <span class="meeting-value">Online via Zoom</span>
+        </div>
+
+        <div class="meeting-row">
+            <span class="meeting-label">Meeting ID</span>
+            <span class="meeting-value">937 2685 8841</span>
+        </div>
+
+        <div class="meeting-row">
+            <span class="meeting-label">Password</span>
+            <span class="meeting-value">129 140</span>
+        </div>
+
+        <a
+            href="https://online.yildiz.edu.tr/joinmeeting?meetingid=feeb9885-fbfb-402a-b349-294d144ba5e9"
+            class="meeting-button"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Join Zoom Meeting &#8594;
+        </a>
     </div>
 
     <div id="expired">
         The countdown has ended!
     </div>
 </div>
+
 
 <script>
     const targetDate = new Date("2026-10-14T15:00:00+03:00");
